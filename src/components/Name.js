@@ -3,11 +3,16 @@ import useLocalStorage from './useLocalStorage';
 import useUpdateLogger from './useUpdateLogger'; 
 import useDocumentTitle from './useDocumentTitle'; 
 import useInputNumber from './useInput/useInputNumber'; 
+import useInput from './useInput'; 
 
+function validateMessage(value){
+    if (value.length < 10) return "Message should be more than 10 characters"
+}
 export default function Name(){
     const [name, setName, removeKey, removeAll, getByIndex] = useLocalStorage('name', '')
     useUpdateLogger(getByIndex(0))
     const [age,bindAge,resetAge] = useInputNumber(0)
+    const [message,bindMessage,resetMessage, error] = useInput('',validateMessage)
     useUpdateLogger(name)
     useDocumentTitle(name + age)
     return(
@@ -30,6 +35,11 @@ export default function Name(){
         <button onClick={resetAge}>reset</button>
         <br />
         <p>{age}</p>
+        <br />
+        <textarea
+          {...bindMessage}
+        />
+        <p>{error}</p>
         </>
 
     )
