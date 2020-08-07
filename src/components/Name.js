@@ -1,12 +1,15 @@
 import React from 'react';
 import useLocalStorage from './useLocalStorage'; 
 import useUpdateLogger from './useUpdateLogger'; 
+import useDocumentTitle from './useDocumentTitle'; 
 import useInputNumber from './useInput/useInputNumber'; 
 
 export default function Name(){
     const [name, setName, removeKey, removeAll, getByIndex] = useLocalStorage('name', '')
     useUpdateLogger(getByIndex(0))
     const [age,bindAge,resetAge] = useInputNumber(0)
+    useUpdateLogger(name)
+    useDocumentTitle(name + age)
     return(
         <>
         <input
